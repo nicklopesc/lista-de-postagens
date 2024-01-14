@@ -1,6 +1,6 @@
-# Desafio de Listar Postagens e realizar Crud
+# Desafio de Listar Postagens 
 
-T
+Listar postagens e realizar CRUD com uma api teste
 ## Available Scripts
 
 In the project directory, you can run:
