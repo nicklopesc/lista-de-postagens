@@ -1,22 +1,17 @@
-import React, { useState } from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
+import React, { useState } from "react";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
 
-import { createPostagem, getPostagens } from '../service/routes/apiPostagens';
-import { v4 as uuidv4 } from 'uuid';
-import {
-  Toolbar,
-  Typography,
-  TextField,
-  Grid
-} from "@mui/material";
+import { createPostagem, getPostagens } from "../service/routes/apiPostagens";
+import { v4 as uuidv4 } from "uuid";
+import { Toolbar, Typography, TextField, Grid } from "@mui/material";
 
 export default function NewPost({ isOpen, onClose }) {
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
 
   const [isTitleExists, setIsTitleExists] = useState(false);
 
@@ -25,7 +20,10 @@ export default function NewPost({ isOpen, onClose }) {
     try {
       // Verificar se já existe um post com o mesmo título
       const existingPosts = await getPostagens();
-      const postWithTitleExists = existingPosts.some(post => post.title === title);
+      //Confere se há títulos existentes
+      const postWithTitleExists = existingPosts.some(
+        (post) => post.title === title
+      );
 
       if (postWithTitleExists) {
         setIsTitleExists(true);
@@ -34,10 +32,10 @@ export default function NewPost({ isOpen, onClose }) {
 
       // Se não houver um post com o mesmo título, criar o novo post
       const newPostData = {
-        id: parseInt(uuidv4().replace(/-/g, ''), 16),
+        id: parseInt(uuidv4().replace(/-/g, ""), 16),
         title,
         body,
-        userId: parseInt(uuidv4().replace(/-/g, ''), 16),
+        userId: parseInt(uuidv4().replace(/-/g, ""), 16),
       };
 
       const createdPost = await createPostagem(newPostData);
@@ -45,7 +43,7 @@ export default function NewPost({ isOpen, onClose }) {
       alert("Dados Enviados!");
       onClose();
     } catch (error) {
-      console.error('Erro ao criar postagem:', error);
+      console.error("Erro ao criar postagem:", error);
     }
   };
 
@@ -61,7 +59,11 @@ export default function NewPost({ isOpen, onClose }) {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title" height={50} sx={{ backgroundColor: "#023535" }}>
+      <DialogTitle
+        id="alert-dialog-title"
+        height={50}
+        sx={{ backgroundColor: "#023535" }}
+      >
         <Toolbar>
           <Typography variant="h5" sx={{ color: "#BFBFBF" }}>
             Cadastrar Nova Postagem
@@ -69,19 +71,25 @@ export default function NewPost({ isOpen, onClose }) {
         </Toolbar>
       </DialogTitle>
       <DialogContent>
-        <Typography variant='body1' sx={{ marginTop: "20px" }}>
-          Para realizar uma nova postagem, é necessário preencher os campos abaixo.
+        <Typography variant="body1" sx={{ marginTop: "20px" }}>
+          Para realizar uma nova postagem, é necessário preencher os campos
+          abaixo.
         </Typography>
-        <Grid container sx={{ display: 'flex', flexDirection: 'row', marginTop: '20px' }}>
+        <Grid
+          container
+          sx={{ display: "flex", flexDirection: "row", marginTop: "20px" }}
+        >
           <TextField
             required
             id="outlined-required"
             label="Título"
-            sx={{ flex: 1, marginRight: '10px' }}
+            sx={{ flex: 1, marginRight: "10px" }}
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             error={isTitleExists}
-            helperText={isTitleExists ? 'Já existe um post com este título.' : ''}
+            helperText={
+              isTitleExists ? "Já existe um post com este título." : ""
+            }
           />
           <TextField
             required
@@ -94,10 +102,19 @@ export default function NewPost({ isOpen, onClose }) {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button variant='outlined' onClick={handleCreatePostagem} disabled={!title || !body}>
+        <Button
+          variant="outlined"
+          onClick={handleCreatePostagem}
+          disabled={!title || !body}
+        >
           Confirmar
         </Button>
-        <Button variant='outlined' onClick={handleClose} autoFocus sx={{ color: "red", borderColor: "red" }}>
+        <Button
+          variant="outlined"
+          onClick={handleClose}
+          autoFocus
+          sx={{ color: "red", borderColor: "red" }}
+        >
           Cancelar
         </Button>
       </DialogActions>
