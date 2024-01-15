@@ -1,7 +1,6 @@
-# Getting Started with Create React App
+# Desafio de Listar Postagens 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
+Listar postagens e realizar CRUD com uma api teste
 ## Available Scripts
 
 In the project directory, you can run:
